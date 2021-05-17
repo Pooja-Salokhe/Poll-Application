@@ -1,0 +1,235 @@
+<div class="container">
+  <div class="row">
+    <span><img src="assets/logo.jpg" class="header-img" /></span>
+    <h2 class="header-title">Create Poll For Your Vote</h2>
+    <hr />
+    <!-- This view will display form to create poll question and it's options -->
+    <div class="col-sm-4 outline">
+      <form [formGroup]="pollQuestionForm">
+        <div class="form-group">
+          <label for="question"
+            >Question
+            <i class="fa fa-info-circle helptext"></i>
+            <span class="hide">
+              If the input text length in below field is greater than 80
+              characters then the field will get disabled.
+            </span>
+          </label>
+
+          <input
+            type="text"
+            id="question"
+            name="question"
+            formControlName="question"
+            class="form-control question-text-field"
+            placeholder="Type a question"
+            (input)="onInputChange($event, 'question', 0)"
+          />
+          <button
+            class="btn btn-primary edit-question-btn"
+            id="editQuestion"
+            (click)="enabledInputField('question', 0)"
+            title="Edit Question"
+          >
+            <i class="fa fa-edit"></i>
+          </button>
+          <div
+            *ngIf="formControl.question.touched && formControl.question.invalid"
+            class="alert alert-danger"
+          >
+            <div *ngIf="formControl.question.errors.required">
+              Question is required.
+            </div>
+            <div *ngIf="formControl.question.errors.maxlength">
+              Please enter less than 80 characters.
+            </div>
+          </div>
+        </div>
+
+        <table class="table" formArrayName="options">
+          <tr>
+            <th>
+              Add Multiple Options <i class="fa fa-info-circle helptext"></i>
+              <span class="hide">
+                If the input text length in below field is greater than 80
+                characters then the field will get disabled.
+              </span>
+            </th>
+
+            <th>
+              <button
+                type="submit"
+                (click)="addOption()"
+                class="btn btn-primary add-option"
+                title="Add more option"
+              >
+                +
+              </button>
+            </th>
+          </tr>
+
+          <tr
+            *ngFor="let quantity of options().controls; let i = index"
+            [formGroupName]="i"
+          >
+            <td>
+              <input
+                type="text"
+                formControlName="option"
+                class="form-control"
+                id="option{{ i }}"
+                placeholder="Type an answer"
+                (input)="onInputChange($event, 'option', i)"
+              />
+
+              <div
+                *ngIf="
+                  formControl.options.controls[i].controls.option.touched &&
+                  formControl.options.controls[i].controls.option.invalid
+                "
+                class="alert alert-danger"
+              >
+                <div
+                  class="error-feedback"
+                  *ngIf="
+                    formControl.options.controls[i].controls.option.errors
+                      .required
+                  "
+                >
+                  Answer is required.
+                </div>
+                <div
+                  class="error-feedback"
+                  *ngIf="
+                    formControl.options.controls[i].controls.option.errors
+                      .maxlength
+                  "
+                >
+                  Please enter less than 80 characters.
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <button
+                type="submit"
+                (click)="removeOption(i)"
+                class="remove-option btn btn-danger"
+                title="Remove option"
+              >
+                x
+              </button>
+              &nbsp;
+              <button
+                class="btn btn-primary edit-option-btn"
+                id="editAnswer{{ i }}"
+                (click)="enabledInputField('option', i)"
+                title="Edit Option"
+              >
+                <i class="fa fa-edit"></i>
+              </button>
+            </td>
+          </tr>
+        </table>
+
+        <div class="row">
+          <div class="col-sm-7">
+            <span>
+              {{
+                createdPollQuestion[createdPollQuestion.length - 1]
+                  ? createdPollQuestion[createdPollQuestion.length - 1].options
+                      .length
+                  : 0
+              }}
+              / 10 possible options</span
+            >
+          </div>
+          <div class="col-sm-3">
+            <button
+              type="submit"
+              class="create-poll-btn btn btn-success"
+              (click)="createPoll()"
+              [disabled]="pollQuestionForm.invalid"
+            >
+              Create Poll
+            </button>
+          </div>
+          <div class="col-sm-2">
+            <button
+              type="submit"
+              class="button btn btn-primary"
+              (click)="resetForm()"
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <br />
+    </div>
+
+    <!-- This view will display after creating the poll question -->
+    <div class="col-sm-3 outline" *ngIf="createPollStatus">
+      <div class="container">
+        <h3>
+          <span
+            class="text-format"
+            title="{{
+              createdPollQuestion[createdPollQuestion.length - 1].question
+            }}"
+          >
+            {{ createdPollQuestion[createdPollQuestion.length - 1].question }}
+          </span>
+        </h3>
+        <hr />
+        <div>
+          <div
+            class="form-check"
+            *ngFor="
+              let item of createdPollQuestion[createdPollQuestion.length - 1]
+                .options;
+              let i = index
+            "
+          >
+            <input
+              type="radio"
+              class="form-check-input"
+              value="{{ item.option }}"
+              id="flexRadioDefault{{ i }}"
+              name="flexRadioDefault"
+              [(ngModel)]="selectedAnswer"
+            />
+            <label
+              class="form-check-label"
+              for="flexRadioDefault"
+              title="{{ item.option }}"
+            >
+              {{
+                item.option.length > 10
+                  ? (item.option | slice: 0:10) + ".."
+                  : item.option
+              }}
+            </label>
+          </div>
+
+          <br />
+          <button
+            type="submit"
+            class="button btn btn-success"
+            (click)="vote()"
+            [disabled]="selectedAnswer == ''"
+          >
+            Vote
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- This view will display the bar chart based vote count for the poll -->
+    <div class="col-sm-5" *ngIf="voteStatus">
+      <app-view-chart [chartData]="createdPollQuestion"></app-view-chart>
+    </div>
+  </div>
+  <hr />
+</div>

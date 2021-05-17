@@ -1,27 +1,45 @@
-# PollApplication
+# Poll Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.11.
+The application is a single page application which is divided into three sections. In the first section, the user can create a poll with up to 10 options. In the central one, the user can vote by selecting one of the options and pressing the "vote" button. The chart will update based on the questions created and the votes that each question got on the right side.
 
-## Development server
+## Tech stack
+This package contains:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```bash
+Framework/Languages: Angular v11.x,Charts.js,HTML/CSS,Typescript,Karma/Protractor
 
-## Code scaffolding
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Use cases
 
-## Build
+```python
+• As the owner, I want to change my poll question.
+• As the owner, I want to add, edit or remove the options of my poll.
+• As the owner, I want to reset the whole form, including answers.
+• As the user, I want to see the UI refresh automatically when something changes.
+• As the respondent, I want to send several answers.
+• As the respondent, I want to see the changes in real-time.
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Install
+Clone this repository and install npm dependencies
+```python
+git clone git@github.com:Pooja-Salokhe/Poll-Application.git
+cd poll-application
+npm install
+```
+## Run
+```python
+ng serve
 
-## Running unit tests
+```
+Navigate to http://localhost:4200
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+## Testing
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```python
+Unit Test
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Run ng test to execute the unit tests via Karma.
+````

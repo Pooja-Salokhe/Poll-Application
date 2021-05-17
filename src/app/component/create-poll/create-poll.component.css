@@ -1,0 +1,60 @@
+.outline {
+  border-right: double;
+}
+
+.add-option {
+  background-color: #0d6efd;
+}
+
+.error-feedback {
+  background-color: #f8d7da;
+}
+
+.remove-option {
+  background-color: #dc3545;
+}
+
+.button {
+  float: right;
+}
+.create-poll-btn {
+  float: right;
+  width: 108px;
+}
+
+.hide {
+  display: none;
+}
+
+.helptext:hover + .hide {
+  display: block;
+  color: red;
+}
+
+.question-text-field {
+  width: 350px;
+}
+
+.edit-option-btn {
+  display: none;
+  background-color: #0d6efd;
+}
+.edit-question-btn {
+  display: none;
+  margin-top: -64px;
+  margin-left: 360px;
+}
+.text-format {
+  word-wrap: break-word;
+}
+
+.header-img {
+  width: 36px;
+  margin-top: 23px;
+  padding-top: 5px;
+}
+
+.header-title{
+  margin-top: -33PX;
+  margin-left: 35px;
+}
