@@ -25,7 +25,6 @@ Framework/Languages: Angular v11.x,Charts.js,HTML/CSS,Typescript,Karma/Protracto
 Clone this repository and install npm dependencies
 ```python
 git clone git@github.com:Pooja-Salokhe/Poll-Application.git
-cd poll-application
 npm install
 ```
 ## Run
